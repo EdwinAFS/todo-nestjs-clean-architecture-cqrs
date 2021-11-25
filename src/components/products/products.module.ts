@@ -11,7 +11,7 @@ import { UpdateProductHandler } from './application/update/updateProduct.handler
 import { CreateProductHandler } from './application/create/createProduct.handler';
 import { FindAllHandler } from './application/findAll/FindAllProducts.handler';
 
-import { ProductsController } from './infraestructure/controllers/Products.controller';
+import { ProductsController } from './infraestructure/controllers/products/Products.controller';
 
 export const CommandHandlers = [
 	CreateProductHandler,

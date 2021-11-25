@@ -8,9 +8,19 @@ import { CostumersController } from './components/costumers/infraestructure/cost
 import { UsersController } from './components/users/infraestructure/users.controller';
 import { OrdersController } from './components/orders/infraestructure/orders.controller';
 import { ProductsModule } from './components/products/products.module';
+import { ConfigModule } from '@nestjs/config';
+import config from './environments/config';
+import { environments } from './environments/enviroments';
 
 @Module({
-	imports: [ProductsModule],
+	imports: [
+		ConfigModule.forRoot({
+			envFilePath: environments[process.env.NODE_ENV] || environments.dev,
+			isGlobal: true,
+			load: [config],
+		}),
+		ProductsModule,
+	],
 	controllers: [
 		AppController,
 		CategoriesController,
