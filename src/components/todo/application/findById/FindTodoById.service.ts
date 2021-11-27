@@ -10,7 +10,7 @@ export class FindTodoByIdService {
 	}
 
 	async run(productId: string) {
-		const product = new Todo(productId, 'test', 'test', 123123);
+		const product = new Todo(productId, "title", "description", new Date(), new Date());
 
 		if (!product) {
 			throw new TodoNotExist();

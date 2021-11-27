@@ -26,10 +26,11 @@ export class TodoController extends ApiController {
 	create(@Body() createTodoDto: CreateTodoDto) {
 		return this.commandBus.execute(
 			new CreateTodoCommand(
-				createTodoDto.todoId,
-				createTodoDto.name,
+				createTodoDto.id,
+				createTodoDto.title,
 				createTodoDto.description,
-				createTodoDto.price,
+				createTodoDto.created_at,
+				createTodoDto.updated_at,
 			),
 		);
 	}
@@ -42,9 +43,10 @@ export class TodoController extends ApiController {
 		return this.commandBus.execute(
 			new UpdateTodoCommand(
 				todoId,
-				payload.name,
+				payload.title,
 				payload.description,
-				payload.price,
+				payload.created_at,
+				payload.updated_at,
 			),
 		);
 	}

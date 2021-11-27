@@ -12,13 +12,13 @@ export class UpdateTodoService {
 	}
 
 	async run(
-		productId: string,
-		name: string,
+		id: string,
+		title: string,
 		description: string,
-		price: number,
+		created_at: Date,
+		updated_at: Date,
 	): Promise<void> {
-		const product = new Todo(productId, name, description, price);
-		console.log('update-product.service => ', product);
-		console.log(this.configService.database.DB_NAME);
+		const product = new Todo(id, title, description, created_at, updated_at);
+
 	}
 }

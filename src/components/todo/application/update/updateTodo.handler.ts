@@ -9,13 +9,18 @@ export class UpdateTodoHandler
 	constructor(private updateTodosService: UpdateTodoService) { }
 
 	async execute(command: UpdateTodoCommand) {
-		const { todoId, name, description, price } = command;
+		const { id,
+			title,
+			description,
+			created_at,
+			updated_at, } = command;
 
 		await this.updateTodosService.run(
-			todoId,
-			name,
+			id,
+			title,
 			description,
-			price,
+			created_at,
+			updated_at,
 		);
 	}
 }

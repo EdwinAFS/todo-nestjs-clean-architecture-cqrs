@@ -1,38 +1,49 @@
 import { Nullable } from 'src/shared/domain/Nullable';
 
 export class Todo {
-	readonly todoId: string;
-	readonly name: string;
+	readonly id: string;
+	readonly title: string;
 	readonly description: string;
-	readonly price: number;
+	readonly created_at: Date;
+	readonly updated_at: Date;
 
 	constructor(
-		todoId: string,
-		name: string,
+		id: string,
+		title: string,
 		description: string,
-		price: number,
+		created_at: Date,
+		updated_at: Date,
 	) {
-		this.todoId = todoId;
-		this.name = name;
+		this.id = id;
+		this.title = title;
 		this.description = description;
-		this.price = price;
+		this.created_at = created_at;
+		this.updated_at = updated_at;
 	}
 
 	static toDomain(
-		todoId: string,
-		name: string,
+		id: string,
+		title: string,
 		description: string,
-		price: number,
+		created_at: Date,
+		updated_at: Date,
 	): Nullable<Todo> {
-		return new Todo(todoId, name, description, price);
+		return new Todo(
+			id,
+			title,
+			description,
+			created_at,
+			updated_at,
+		);
 	}
 
 	toPrimitives() {
 		return {
-			todoId: this.todoId,
-			name: this.name,
+			id: this.id,
+			title: this.title,
 			description: this.description,
-			price: this.price,
+			created_at: this.created_at,
+			updated_at: this.updated_at,
 		};
 	}
 }

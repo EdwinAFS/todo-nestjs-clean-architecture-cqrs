@@ -8,12 +8,13 @@ export class CreateTodoService {
 	}
 
 	async run(
-		todoId: string,
-		name: string,
+		id: string,
+		title: string,
 		description: string,
-		price: number,
+		created_at: Date,
+		updated_at: Date,
 	): Promise<void> {
-		const todo = new Todo(todoId, name, description, price);
+		const todo = new Todo(id, title, description, created_at, updated_at);
 		console.log('create-todo.service', todo);
 	}
 }

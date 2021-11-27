@@ -12,6 +12,8 @@ import { CreateTodoHandler } from './application/create/createTodo.handler';
 import { FindAllHandler } from './application/findAll/FindAllTodo.handler';
 
 import { TodoController } from './infraestructure/controllers/todo/Todo.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Todo } from 'src/shared/infraestructure/persistence/todo.entity';
 
 export const CommandHandlers = [
 	CreateTodoHandler,
@@ -27,12 +29,14 @@ export const TodoServices = [
 ];
 
 @Module({
-	imports: [CqrsModule],
+	imports: [CqrsModule, TypeOrmModule.forFeature([
+		Todo
+	])],
 	controllers: [TodoController],
+
 	providers: [
 		...TodoServices,
 		...CommandHandlers,
-		/* TodoRepository, */
 	],
 })
 export class TodoModule { }

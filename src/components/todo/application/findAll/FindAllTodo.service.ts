@@ -1,15 +1,19 @@
 import { FindAllTodoResponse } from './FindAllTodo.response';
 import { Injectable } from '@nestjs/common';
-import { Todo } from 'src/components/todo/domain/models/Todo';
 
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Todo } from '../../domain/models/Todo';
+import { Todo as TodoEntity } from '../../../../shared/infraestructure/persistence/todo.entity';
 @Injectable()
 export class FindAllTodoService {
-	constructor() {
+	constructor(@InjectRepository(TodoEntity) private todoRepository: Repository<TodoEntity>) {
 		// repository and eventBus
 	}
 
 	async run() {
-		const todo = [new Todo('1', 'test', 'test', 123123)];
-		return new FindAllTodoResponse(todo);
+		const todoList = await this.todoRepository.find();
+
+		return new FindAllTodoResponse(todoList.map(item => Todo.toDomain(item.id, item.title, item.description, item.created_at, item.updated_at)))
 	}
 }

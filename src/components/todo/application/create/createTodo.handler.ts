@@ -10,13 +10,20 @@ export class CreateTodoHandler
 	constructor(private createTodoService: CreateTodoService) { }
 
 	async execute(command: CreateTodoCommand) {
-		const { todoId, name, description, price } = command;
+		const {
+			id,
+			title,
+			description,
+			created_at,
+			updated_at
+		} = command;
 
 		await this.createTodoService.run(
-			todoId,
-			name,
+			id,
+			title,
 			description,
-			price,
+			created_at,
+			updated_at,
 		);
 	}
 }
