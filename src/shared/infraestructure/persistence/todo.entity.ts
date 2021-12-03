@@ -1,10 +1,10 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class Todo extends BaseEntity {
 
-    @PrimaryColumn()
-    id: string
+    @PrimaryGeneratedColumn("uuid")
+    id: string;
 
     @Column({ type: "varchar" })
     title: string
@@ -12,9 +12,9 @@ export class Todo extends BaseEntity {
     @Column()
     description: string
 
-    @CreateDateColumn({ type: 'timestamp' })
+    @CreateDateColumn({ type: 'timestamptz', default: 'CURRENT_TIMESTAMP' })
     created_at: Date
 
-    @CreateDateColumn({ type: 'timestamp' })
+    @UpdateDateColumn({ type: 'timestamptz', default: 'CURRENT_TIMESTAMP' })
     updated_at: Date
 }
