@@ -14,16 +14,14 @@ export class CreateTodoHandler
 			id,
 			title,
 			description,
-			created_at,
-			updated_at
+			userId
 		} = command;
 
 		await this.createTodoService.run(
 			id,
 			title,
 			description,
-			created_at,
-			updated_at,
+			userId
 		);
 	}
 }

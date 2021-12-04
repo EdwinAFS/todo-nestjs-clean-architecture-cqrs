@@ -1,47 +1,56 @@
 import { Nullable } from 'src/shared/domain/Nullable';
+import { Uuid } from 'src/shared/domain/value-object/Uuid';
 
 export class Todo {
-	readonly id: string;
+	readonly id: Uuid;
 	readonly title: string;
 	readonly description: string;
+	readonly userId: string;
 	readonly created_at: Date;
 	readonly updated_at: Date;
 
 	constructor(
-		id: string,
+		id: Uuid,
 		title: string,
 		description: string,
-		created_at: Date,
-		updated_at: Date,
+		userId: string,
+		created_at?: Date,
+		updated_at?: Date,
 	) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
+		this.userId = userId;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 	}
 
 	static toDomain(
-		id: string,
-		title: string,
-		description: string,
-		created_at: Date,
-		updated_at: Date,
+		data: {
+			id: string,
+			title: string,
+			description: string,
+			userId: string,
+			created_at: Date,
+			updated_at: Date,
+		}
 	): Nullable<Todo> {
 		return new Todo(
-			id,
-			title,
-			description,
-			created_at,
-			updated_at,
+			new Uuid(data.id),
+			data.title,
+			data.description,
+			data.userId,
+			data.created_at,
+			data.updated_at,
 		);
 	}
 
 	toPrimitives() {
 		return {
-			id: this.id,
+			id: this.id.toString(),
 			title: this.title,
 			description: this.description,
+			userId: this.userId,
 			created_at: this.created_at,
 			updated_at: this.updated_at,
 		};

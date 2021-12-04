@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { Todo } from 'src/components/todo/domain/models/Todo';
 import config from 'src/environments/config';
+import { Uuid } from 'src/shared/domain/value-object/Uuid';
 
 @Injectable()
 export class UpdateTodoService {
@@ -15,10 +16,9 @@ export class UpdateTodoService {
 		id: string,
 		title: string,
 		description: string,
-		created_at: Date,
-		updated_at: Date,
+		userId: string
 	): Promise<void> {
-		const product = new Todo(id, title, description, created_at, updated_at);
+		const product = new Todo(new Uuid(id), title, description, userId);
 
 	}
 }

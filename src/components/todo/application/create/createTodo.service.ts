@@ -1,9 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Todo } from 'src/components/todo/domain/models/Todo';
+import { Uuid } from 'src/shared/domain/value-object/Uuid';
+import { TodoRepository } from '../../domain/repositories/Todo.repository';
 
 @Injectable()
 export class CreateTodoService {
-	constructor() {
+	constructor(@Inject('TodoRepository') private todoRepository: TodoRepository) {
 		// repository and eventBus
 	}
 
@@ -11,10 +13,9 @@ export class CreateTodoService {
 		id: string,
 		title: string,
 		description: string,
-		created_at: Date,
-		updated_at: Date,
+		userId: string
 	): Promise<void> {
-		const todo = new Todo(id, title, description, created_at, updated_at);
-		console.log('create-todo.service', todo);
+		const todo = new Todo(new Uuid(id), title, description, userId);
+		await this.todoRepository.save(todo);
 	}
 }

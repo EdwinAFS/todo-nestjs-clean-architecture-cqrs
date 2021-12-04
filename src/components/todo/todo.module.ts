@@ -13,7 +13,8 @@ import { FindAllHandler } from './application/findAll/FindAllTodo.handler';
 
 import { TodoController } from './infraestructure/controllers/todo/Todo.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Todo } from 'src/shared/infraestructure/persistence/todo.entity';
+import { TodoEntity } from 'src/shared/infraestructure/persistence/todo.entity';
+import { TodoMysqlRepository } from './infraestructure/repositories/TodoMysql.respository';
 
 export const CommandHandlers = [
 	CreateTodoHandler,
@@ -21,22 +22,30 @@ export const CommandHandlers = [
 	FindTodoByIdHandler,
 	FindAllHandler,
 ];
-export const TodoServices = [
+export const Services = [
 	FindAllTodoService,
 	FindTodoByIdService,
 	UpdateTodoService,
 	CreateTodoService,
 ];
 
+export const Repositories = [
+	{
+		provide: 'TodoRepository',
+		useClass: TodoMysqlRepository,
+	}
+];
+
 @Module({
 	imports: [CqrsModule, TypeOrmModule.forFeature([
-		Todo
+		TodoEntity
 	])],
 	controllers: [TodoController],
 
 	providers: [
-		...TodoServices,
+		...Services,
 		...CommandHandlers,
+		...Repositories,
 	],
 })
 export class TodoModule { }

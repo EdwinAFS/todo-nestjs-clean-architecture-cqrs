@@ -1,11 +1,11 @@
-import { CreateTodoDto } from './CreateTodo.dto';
+import { CreateTodoDto } from './dto/CreateTodo.dto';
 import { FindTodoByIdQuery } from '../../../application/findById/FindTodoById.query';
 import { UpdateTodoCommand } from '../../../application/update/updateTodo.command';
 import { CreateTodoCommand } from '../../../application/create/createTodo.command';
 import { ApiController } from '../../../../../shared/infraestructure/ApiController';
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { FindAllTodoQuery } from '../../../application/findAll/FindAllTodo.query';
-import { UpdateTodoDto } from './UpdateTodo.dto';
+import { UpdateTodoDto } from './dto/UpdateTodo.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
 @ApiTags('todo')
@@ -29,8 +29,7 @@ export class TodoController extends ApiController {
 				createTodoDto.id,
 				createTodoDto.title,
 				createTodoDto.description,
-				createTodoDto.created_at,
-				createTodoDto.updated_at,
+				createTodoDto.userId
 			),
 		);
 	}
@@ -45,8 +44,7 @@ export class TodoController extends ApiController {
 				todoId,
 				payload.title,
 				payload.description,
-				payload.created_at,
-				payload.updated_at,
+				payload.userId
 			),
 		);
 	}

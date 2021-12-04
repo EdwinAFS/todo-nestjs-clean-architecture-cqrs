@@ -18,8 +18,12 @@ export class CreateTodoDto {
 	readonly title: string;
 
 	@IsString()
-	@IsOptional()
+	@IsNotEmpty()
 	readonly description: string;
+
+	@IsUUID()
+	@IsNotEmpty()
+	readonly userId: string;
 
 	@IsDate()
 	@IsOptional()

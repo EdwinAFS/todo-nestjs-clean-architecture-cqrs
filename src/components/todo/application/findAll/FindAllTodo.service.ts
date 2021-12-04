@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Todo } from '../../domain/models/Todo';
-import { Todo as TodoEntity } from '../../../../shared/infraestructure/persistence/todo.entity';
+import { TodoEntity } from '../../../../shared/infraestructure/persistence/todo.entity';
 @Injectable()
 export class FindAllTodoService {
 	constructor(@InjectRepository(TodoEntity) private todoRepository: Repository<TodoEntity>) {
@@ -14,6 +14,6 @@ export class FindAllTodoService {
 	async run() {
 		const todoList = await this.todoRepository.find();
 
-		return new FindAllTodoResponse(todoList.map(item => Todo.toDomain(item.id, item.title, item.description, item.created_at, item.updated_at)))
+		return new FindAllTodoResponse(todoList.map(item => Todo.toDomain(item)))
 	}
 }

@@ -1,7 +1,8 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { UserEntity } from "./user.entity";
 
-@Entity()
-export class Todo extends BaseEntity {
+@Entity({ name: 'todo' })
+export class TodoEntity extends BaseEntity {
 
     @PrimaryGeneratedColumn("uuid")
     id: string;
@@ -12,9 +13,25 @@ export class Todo extends BaseEntity {
     @Column()
     description: string
 
-    @CreateDateColumn({ type: 'timestamptz', default: 'CURRENT_TIMESTAMP' })
-    created_at: Date
+    @Column()
+    userId: string
 
-    @UpdateDateColumn({ type: 'timestamptz', default: 'CURRENT_TIMESTAMP' })
-    updated_at: Date
+    @CreateDateColumn({
+        type: 'timestamptz',
+        default: () => 'CURRENT_TIMESTAMP',
+    })
+    created_at: Date;
+
+    @UpdateDateColumn({
+        type: 'timestamptz',
+        default: () => 'CURRENT_TIMESTAMP',
+    })
+    updated_at: Date;
+
+    @ManyToOne(() => UserEntity, user => user.todos)
+    @JoinColumn({
+        name: 'userId'
+    })
+    user: UserEntity;
 }
+
