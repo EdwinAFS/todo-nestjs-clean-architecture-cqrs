@@ -1,4 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { Uuid } from 'src/shared/domain/value-object/Uuid';
 
 import { CreateTodoCommand } from './createTodo.command';
 import { CreateTodoService } from './createTodo.service';
@@ -17,8 +18,10 @@ export class CreateTodoHandler
 			userId
 		} = command;
 
+		const todoId = new Uuid(id);
+
 		await this.createTodoService.run(
-			id,
+			todoId,
 			title,
 			description,
 			userId

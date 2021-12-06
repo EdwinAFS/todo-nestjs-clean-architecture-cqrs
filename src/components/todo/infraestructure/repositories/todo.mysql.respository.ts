@@ -14,7 +14,6 @@ export class TodoMysqlRepository implements TodoRepository {
 
     async save(todoToInsert: Todo): Promise<void> {
         const response = await this.todoRepo.save(todoToInsert.toPrimitives());
-        console.log(response);
     }
 
     async findById(id: Uuid): Promise<Nullable<Todo>> {
@@ -23,7 +22,7 @@ export class TodoMysqlRepository implements TodoRepository {
     }
 
     async findByUserId(userId: Uuid): Promise<Todo[]> {
-        const todo = await this.todoRepo.find({ userId: userId.toString() });
+        const todo = await this.todoRepo.find({ where: { userId: userId.toString() } });
         return todo.map(item => Todo.toDomain(item));
     }
 

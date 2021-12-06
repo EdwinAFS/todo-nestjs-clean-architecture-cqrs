@@ -1,24 +1,28 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
 import { Todo } from 'src/components/todo/domain/models/Todo';
-import config from 'src/environments/config';
 import { Uuid } from 'src/shared/domain/value-object/Uuid';
+import { TodoNotFoundException } from '../../domain/exceptions/todo-not-found.exception';
+import { TodoRepository } from '../../domain/repositories/Todo.repository';
 
 @Injectable()
 export class UpdateTodoService {
 	constructor(
-		@Inject(config.KEY) private configService: ConfigType<typeof config>,
-	) {
-		// repository and eventBus
-	}
+		@Inject('TodoRepository') private todoRepository: TodoRepository,
+	) { }
 
 	async run(
-		id: string,
+		todoId: Uuid,
 		title: string,
 		description: string,
 		userId: string
 	): Promise<void> {
-		const product = new Todo(new Uuid(id), title, description, userId);
 
+		const todo = await this.todoRepository.findById(todoId);
+
+		if (!todo) {
+			throw new TodoNotFoundException(todoId.toString());
+		}
+
+		await this.todoRepository.update(todo.id, new Todo(todo.id, title, description, userId))
 	}
 }

@@ -5,17 +5,17 @@ import { TodoRepository } from '../../domain/repositories/Todo.repository';
 
 @Injectable()
 export class CreateTodoService {
-	constructor(@Inject('TodoRepository') private todoRepository: TodoRepository) {
-		// repository and eventBus
-	}
+	constructor(
+		@Inject('TodoRepository') private todoRepository: TodoRepository
+	) { }
 
 	async run(
-		id: string,
+		todoId: Uuid,
 		title: string,
 		description: string,
 		userId: string
 	): Promise<void> {
-		const todo = new Todo(new Uuid(id), title, description, userId);
+		const todo = new Todo(todoId, title, description, userId);
 		await this.todoRepository.save(todo);
 	}
 }

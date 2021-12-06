@@ -46,13 +46,13 @@ export class Todo {
 	}
 
 	toPrimitives() {
-		return {
+		return JSON.parse(JSON.stringify({
 			id: this.id.toString(),
 			title: this.title,
 			description: this.description,
 			userId: this.userId,
 			created_at: this.created_at,
 			updated_at: this.updated_at,
-		};
+		}));
 	}
 }

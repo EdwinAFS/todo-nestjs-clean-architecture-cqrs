@@ -1,4 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { Uuid } from 'src/shared/domain/value-object/Uuid';
 import { UpdateTodoCommand } from './updateTodo.command';
 import { UpdateTodoService } from './updateTodo.service';
 
@@ -10,14 +11,15 @@ export class UpdateTodoHandler
 
 	async execute(command: UpdateTodoCommand) {
 		const {
-			id,
 			title,
 			description,
 			userId
 		} = command;
 
+		const todoId = new Uuid(command.id);
+
 		await this.updateTodosService.run(
-			id,
+			todoId,
 			title,
 			description,
 			userId

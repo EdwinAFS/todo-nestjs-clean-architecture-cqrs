@@ -1,20 +1,20 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 
-import { FindAllTodoService } from './application/findAll/FindAllTodo.service';
-import { FindTodoByIdService } from './application/findById/FindTodoById.service';
+import { FindAllTodoService } from './application/findAll/findAllTodo.service';
+import { FindTodoByIdService } from './application/findById/findTodoById.service';
 import { UpdateTodoService } from './application/update/updateTodo.service';
 import { CreateTodoService } from './application/create/createTodo.service';
 
-import { FindTodoByIdHandler } from './application/findById/FindTodoById.handler';
+import { FindTodoByIdHandler } from './application/findById/findTodoById.handler';
 import { UpdateTodoHandler } from './application/update/updateTodo.handler';
 import { CreateTodoHandler } from './application/create/createTodo.handler';
-import { FindAllHandler } from './application/findAll/FindAllTodo.handler';
+import { FindAllHandler } from './application/findAll/findAllTodo.handler';
 
-import { TodoController } from './infraestructure/controllers/todo/Todo.controller';
+import { TodoController } from './infraestructure/controllers/todo/todo.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TodoEntity } from 'src/shared/infraestructure/persistence/todo.entity';
-import { TodoMysqlRepository } from './infraestructure/repositories/TodoMysql.respository';
+import { TodoMysqlRepository } from './infraestructure/repositories/todo.mysql.respository';
 
 export const CommandHandlers = [
 	CreateTodoHandler,
