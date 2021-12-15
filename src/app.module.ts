@@ -9,6 +9,7 @@ import { TodoModule } from './components/todo/todo.module';
 import { environments } from './environments/enviroments';
 import config from './environments/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserModule } from './components/users/user.module';
 
 @Module({
 	imports: [
@@ -29,6 +30,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 			autoLoadEntities: true
 		}),
 		TodoModule,
+		UserModule,
 	],
 	controllers: [
 		AppController,

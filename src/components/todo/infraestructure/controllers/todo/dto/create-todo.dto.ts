@@ -24,12 +24,4 @@ export class CreateTodoDto {
 	@IsUUID()
 	@IsNotEmpty()
 	readonly userId: string;
-
-	@IsDate()
-	@IsOptional()
-	readonly created_at: Date;
-
-	@IsDate()
-	@IsOptional()
-	readonly updated_at: Date;
 }
