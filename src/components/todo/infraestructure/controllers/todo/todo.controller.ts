@@ -3,7 +3,7 @@ import { FindTodoByIdQuery } from '../../../application/findById/findTodoById.qu
 import { UpdateTodoCommand } from '../../../application/update/updateTodo.command';
 import { CreateTodoCommand } from '../../../application/create/createTodo.command';
 import { ApiController } from '../../../../../shared/infraestructure/ApiController';
-import { Body, Controller, Get, NotFoundException, Param, ParseUUIDPipe, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, ParseUUIDPipe, Patch, Post, Put, UseGuards } from '@nestjs/common';
 import { FindAllTodoQuery } from '../../../application/findAll/findAllTodo.query';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
@@ -11,6 +11,7 @@ import { TodoNotFoundException } from 'src/components/todo/domain/exceptions/tod
 import { JwtAuthGuard } from 'src/shared/infraestructure/guards/jwt-auth.guard';
 import { CurrentUserParam } from 'src/shared/infraestructure/decorator/currentUser.decorator';
 import { CurrentUser } from 'src/shared/domain/currentUser';
+import { CompletedTodoCommand } from 'src/components/todo/application/completed/completedTodo.command';
 
 @ApiTags('todo')
 @Controller('api/v1/todo')
@@ -61,6 +62,25 @@ export class TodoController extends ApiController {
 					payload.title,
 					payload.description,
 					user.id
+				),
+			);
+		} catch (error) {
+			if (error instanceof TodoNotFoundException) {
+				throw new NotFoundException(error.message);
+			}
+
+			throw error;
+		}
+	}
+
+	@Patch('completed/:todoId')
+	async completed(
+		@Param('todoId', ParseUUIDPipe) todoId: string
+	) {
+		try {
+			await this.commandBus.execute(
+				new CompletedTodoCommand(
+					todoId
 				),
 			);
 		} catch (error) {

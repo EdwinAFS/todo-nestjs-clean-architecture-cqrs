@@ -22,12 +22,16 @@ export class TodoMysqlRepository implements TodoRepository {
     }
 
     async findByUserId(userId: Uuid): Promise<Todo[]> {
-        const todo = await this.todoRepo.find({ where: { userId: userId.toString() } });
+        const todo = await this.todoRepo.find({ where: { userId: userId.toString() }, order: { completed: 'ASC', created_at: 'ASC' } });
         return todo.map(item => Todo.toDomain(item));
     }
 
     async update(id: Uuid, todoToUpdate: Todo): Promise<void> {
         await this.todoRepo.update(id.toString(), todoToUpdate.toPrimitives())
     }
+
+    async completed(id: Uuid, completed: boolean): Promise<void> {
+        await this.todoRepo.update(id.toString(), { completed })
+    };
 
 }

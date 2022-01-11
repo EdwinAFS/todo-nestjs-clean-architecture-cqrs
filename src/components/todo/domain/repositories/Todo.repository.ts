@@ -7,4 +7,5 @@ export interface TodoRepository {
     findById: (id: Uuid) => Promise<Nullable<Todo>>;
     findByUserId: (userId: Uuid) => Promise<Todo[]>;
     update: (id: Uuid, todo: Todo) => Promise<void>;
+    completed: (id: Uuid, completed: boolean) => Promise<void>;
 }

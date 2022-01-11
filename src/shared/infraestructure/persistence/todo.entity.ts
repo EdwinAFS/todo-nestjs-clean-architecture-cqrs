@@ -16,6 +16,11 @@ export class TodoEntity extends BaseEntity {
     @Column()
     userId: string
 
+    @Column({
+        default: false
+    })
+    completed: boolean
+
     @CreateDateColumn({
         type: 'timestamptz',
         default: () => 'CURRENT_TIMESTAMP',
@@ -33,5 +38,7 @@ export class TodoEntity extends BaseEntity {
         name: 'userId'
     })
     user: UserEntity;
+
+
 }
 

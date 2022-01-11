@@ -5,11 +5,13 @@ import { FindAllTodoService } from './application/findAll/findAllTodo.service';
 import { FindTodoByIdService } from './application/findById/findTodoById.service';
 import { UpdateTodoService } from './application/update/updateTodo.service';
 import { CreateTodoService } from './application/create/createTodo.service';
+import { CompletedTodoService } from './application/completed/completedTodo.service';
 
 import { FindTodoByIdHandler } from './application/findById/findTodoById.handler';
 import { UpdateTodoHandler } from './application/update/updateTodo.handler';
 import { CreateTodoHandler } from './application/create/createTodo.handler';
 import { FindAllHandler } from './application/findAll/findAllTodo.handler';
+import { CompletedTodoHandler } from './application/completed/completedTodo.handler';
 
 import { TodoController } from './infraestructure/controllers/todo/todo.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -21,12 +23,14 @@ export const CommandHandlers = [
 	UpdateTodoHandler,
 	FindTodoByIdHandler,
 	FindAllHandler,
+	CompletedTodoHandler,
 ];
 export const Services = [
 	FindAllTodoService,
 	FindTodoByIdService,
 	UpdateTodoService,
 	CreateTodoService,
+	CompletedTodoService,
 ];
 
 export const Repositories = [

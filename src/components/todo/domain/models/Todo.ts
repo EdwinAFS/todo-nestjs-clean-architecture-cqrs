@@ -6,6 +6,7 @@ export class Todo {
 	readonly title: string;
 	readonly description: string;
 	readonly userId: string;
+	readonly completed: boolean;
 	readonly created_at: Date;
 	readonly updated_at: Date;
 
@@ -14,6 +15,7 @@ export class Todo {
 		title: string,
 		description: string,
 		userId: string,
+		completed?: boolean,
 		created_at?: Date,
 		updated_at?: Date,
 	) {
@@ -21,6 +23,7 @@ export class Todo {
 		this.title = title;
 		this.description = description;
 		this.userId = userId;
+		this.completed = completed;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 	}
@@ -31,6 +34,7 @@ export class Todo {
 			title: string,
 			description: string,
 			userId: string,
+			completed: boolean,
 			created_at: Date,
 			updated_at: Date,
 		}
@@ -40,6 +44,7 @@ export class Todo {
 			data.title,
 			data.description,
 			data.userId,
+			data.completed,
 			data.created_at,
 			data.updated_at,
 		);
@@ -51,6 +56,7 @@ export class Todo {
 			title: this.title,
 			description: this.description,
 			userId: this.userId,
+			completed: this.completed,
 			created_at: this.created_at,
 			updated_at: this.updated_at,
 		}));
