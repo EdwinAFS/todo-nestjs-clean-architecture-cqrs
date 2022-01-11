@@ -1,8 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-	IsDate,
 	IsNotEmpty,
-	IsOptional,
 	IsString,
 	IsUUID,
 } from 'class-validator';
@@ -20,8 +18,4 @@ export class CreateTodoDto {
 	@IsString()
 	@IsNotEmpty()
 	readonly description: string;
-
-	@IsUUID()
-	@IsNotEmpty()
-	readonly userId: string;
 }

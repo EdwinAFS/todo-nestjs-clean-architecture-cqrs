@@ -3,19 +3,24 @@ import { FindTodoByIdQuery } from '../../../application/findById/findTodoById.qu
 import { UpdateTodoCommand } from '../../../application/update/updateTodo.command';
 import { CreateTodoCommand } from '../../../application/create/createTodo.command';
 import { ApiController } from '../../../../../shared/infraestructure/ApiController';
-import { Body, Controller, Get, NotFoundException, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, ParseUUIDPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { FindAllTodoQuery } from '../../../application/findAll/findAllTodo.query';
 import { UpdateTodoDto } from './dto/update-todo.dto';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { TodoNotFoundException } from 'src/components/todo/domain/exceptions/todo-not-found.exception';
+import { JwtAuthGuard } from 'src/shared/infraestructure/guards/jwt-auth.guard';
+import { CurrentUserParam } from 'src/shared/infraestructure/decorator/currentUser.decorator';
+import { CurrentUser } from 'src/shared/domain/currentUser';
 
 @ApiTags('todo')
-@Controller('todo')
+@Controller('api/v1/todo')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 export class TodoController extends ApiController {
-	@Get(':userId/all')
+	@Get('/all')
 	@ApiOperation({ summary: 'Get all todo by user' })
-	async getAllByUserId(@Param('userId', ParseUUIDPipe) userId: string) {
-		return await this.queryBus.execute(new FindAllTodoQuery(userId));
+	async getAllByUserId(@CurrentUserParam() user: CurrentUser) {
+		return await this.queryBus.execute(new FindAllTodoQuery(user.id));
 	}
 
 	@Get(':todoId')
@@ -32,19 +37,20 @@ export class TodoController extends ApiController {
 	}
 
 	@Post()
-	async create(@Body() createTodoDto: CreateTodoDto) {
+	async create(@CurrentUserParam() user: CurrentUser, @Body() createTodoDto: CreateTodoDto) {
 		await this.commandBus.execute(
 			new CreateTodoCommand(
 				createTodoDto.id,
 				createTodoDto.title,
 				createTodoDto.description,
-				createTodoDto.userId
+				user.id
 			),
 		);
 	}
 
 	@Put(':todoId')
 	async update(
+		@CurrentUserParam() user: CurrentUser,
 		@Param('todoId', ParseUUIDPipe) todoId: string,
 		@Body() payload: UpdateTodoDto,
 	) {
@@ -54,7 +60,7 @@ export class TodoController extends ApiController {
 					todoId,
 					payload.title,
 					payload.description,
-					payload.userId
+					user.id
 				),
 			);
 		} catch (error) {

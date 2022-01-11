@@ -10,6 +10,7 @@ import { environments } from './environments/enviroments';
 import config from './environments/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './components/users/user.module';
+import { AuthModule } from './components/auth/auth.module';
 
 @Module({
 	imports: [
@@ -31,6 +32,7 @@ import { UserModule } from './components/users/user.module';
 		}),
 		TodoModule,
 		UserModule,
+		AuthModule
 	],
 	controllers: [
 		AppController,
