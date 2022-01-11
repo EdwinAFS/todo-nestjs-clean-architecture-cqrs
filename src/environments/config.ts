@@ -2,17 +2,17 @@ import { registerAs } from '@nestjs/config';
 
 export default registerAs('config', () => {
 	return {
-		DATABASE: {
-			DB_CONNECTION: process.env.DB_CONNECTION,
-			DB_USERNAME: process.env.DB_USERNAME,
-			DB_PASSWORD: process.env.DB_PASSWORD,
-			DB_HOST: process.env.DB_HOST,
-			DB_PORT: process.env.DB_PORT,
-			DB_DATABASE: process.env.DB_DATABASE,
-		},
 		DBA: {
 			DBA_EMAIL: process.env.DBA_EMAIL,
 			DBA_PASSWORD: process.env.DBA_PASSWORD,
+		},
+		JWT: {
+			JWT_SECRET: process.env.JWT_SECRET,
+			EXPIRES_IN: process.env.EXPIRES_IN,
+		},
+		API: {
+			APP_URL: process.env.APP_URL,
+			PORT: process.env.PORT,
 		}
 	};
 });

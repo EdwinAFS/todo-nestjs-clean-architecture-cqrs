@@ -13,6 +13,7 @@ export class UpdateUserService {
 	async run(
 		userId: Uuid,
 		email: string,
+		username: string,
 		password: string,
 		role: string,
 	): Promise<void> {
@@ -23,6 +24,6 @@ export class UpdateUserService {
 			throw new UserNotFoundException(userId.toString());
 		}
 
-		await this.userRepository.update(user.id, new User(user.id, email, password, role));
+		await this.userRepository.update(user.id, new User(user.id, email, username, password, role));
 	}
 }

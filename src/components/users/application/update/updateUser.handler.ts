@@ -12,6 +12,7 @@ export class UpdateUserHandler
 	async execute(command: UpdateUserCommand) {
 		const {
 			email,
+			username,
 			password,
 			role
 		} = command;
@@ -21,6 +22,7 @@ export class UpdateUserHandler
 		await this.updateUsersService.run(
 			userId,
 			email,
+			username,
 			password,
 			role
 		);

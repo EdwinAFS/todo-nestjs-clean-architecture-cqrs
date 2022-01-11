@@ -6,8 +6,10 @@ import {
     Param,
     ParseUUIDPipe,
     Put,
+    UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/shared/infraestructure/guards/jwt-auth.guard';
 import { ApiController } from 'src/shared/infraestructure/ApiController';
 import { FindAllUserQuery } from '../../application/findAll/findAllUser.query';
 import { FindUserByIdQuery } from '../../application/findById/findUserById.query';
@@ -16,8 +18,11 @@ import { UserNotFoundException } from '../../domain/exceptions/user-not-found.ex
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @ApiTags('users')
-@Controller('users')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
+@Controller('api/v1/users')
 export class UsersController extends ApiController {
+
     @Get()
     async getAll() {
         return await this.queryBus.execute(new FindAllUserQuery());
@@ -46,6 +51,7 @@ export class UsersController extends ApiController {
                 new UpdateUserCommand(
                     userId,
                     payload.email,
+                    payload.username,
                     payload.password,
                     payload.role
                 ),

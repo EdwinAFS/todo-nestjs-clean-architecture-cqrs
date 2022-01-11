@@ -21,6 +21,11 @@ export class UserMysqlRepository implements UserRepository {
         return user ? User.toDomain(user) : null;
     }
 
+    async findByUsername(username: string): Promise<Nullable<User>> {
+        const user = await this.userRepo.findOne({ username });
+        return user ? User.toDomain(user) : null;
+    }
+
     async find(): Promise<User[]> {
         const user = await this.userRepo.find();
         return user.map(item => User.toDomain(item));
@@ -28,6 +33,10 @@ export class UserMysqlRepository implements UserRepository {
 
     async update(id: Uuid, userToUpdate: User): Promise<void> {
         await this.userRepo.update(id.toString(), userToUpdate.toPrimitives())
+    }
+
+    async create(userToCreate: User): Promise<void> {
+        await this.userRepo.save(userToCreate.toPrimitives())
     }
 
 }

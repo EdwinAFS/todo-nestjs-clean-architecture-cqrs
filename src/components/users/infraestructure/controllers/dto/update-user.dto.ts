@@ -1,32 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
-import {
-    IsEmail,
-    IsIn,
-    IsOptional,
-    IsString,
-    IsUUID,
-} from 'class-validator';
+import { PartialType } from '@nestjs/swagger';
+import { CreateUserDto } from './create-user.dto';
 
-export const ROLES = [
-    'ADMIN', 'CLIENT'
-]
-
-export class UpdateUserDto {
-    @ApiProperty({ description: 'User UUID' })
-    @IsUUID()
-    @IsOptional()
-    readonly id: string;
-
-    @IsOptional()
-    @IsEmail()
-    readonly email: string;
-
-    @IsString()
-    @IsOptional()
-    readonly password: string;
-
-    @IsUUID()
-    @IsOptional()
-    @IsIn(ROLES)
-    readonly role: string;
-}
+export class UpdateUserDto extends PartialType(CreateUserDto) { }
